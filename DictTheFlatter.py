@@ -37,24 +37,27 @@ def flat2title(flat):
     return ret
 
 def FlatDict(dic):
+    # 将多层嵌套字典“拍扁”
     ret={}
     tmp=extract("",dic)
     for k_v in tmp:
         ret[k_v[0]]=k_v[1]
     return ret
 
-def Flat2CSV(dic):
+def Flat2CSV(DicList):
+    # 将多层嵌套字典输出到CSV文件
     DataDict={}
 
-    data=extract("",dic)
-    KeyLine=flat2title(data)
-    ValueLine=flat2row(data)
+    for dic in DicList:
+        data=extract("",dic)
+        KeyLine=flat2title(data)
+        ValueLine=flat2row(data)
 
-    if KeyLine not in DataDict.keys():
-        DataDict[KeyLine]=[]
-        DataDict[KeyLine].append(ValueLine)
-    else:
-        DataDict[KeyLine].append(ValueLine)
+        if KeyLine not in DataDict.keys():
+            DataDict[KeyLine]=[]
+            DataDict[KeyLine].append(ValueLine)
+        else:
+            DataDict[KeyLine].append(ValueLine)
 
     # js = json.dumps(js, indent=4, separators=(',', ':'))
     # print(KeyLine)
@@ -63,6 +66,7 @@ def Flat2CSV(dic):
 
     i=0
     for key,value in DataDict.items():
+        # 每种类型的dict均会有一个文件，自行选择特征，并修改文件名即可
         with open(f"./data/type_{i}.csv","a+",encoding="utf-8") as f:
             
             f.write(f"{key}\n")
@@ -101,5 +105,64 @@ dic={
     }
  }
 
+diclist=[
+    {
+    "msg_type": "other",
+    "_content": {
+        "cmd": "LIVE_INTERACTIVE_GAME",
+        "data": {
+            "type": 1,
+            "uid": 385956415,
+            "uname": "工号1001", 
+            "uface": "http://i1.hdslb.com/bfs/face/e2ddc2275df94af1cebf7028aa1bdc1bb30e78f4.jpg", 
+            "gift_id": 31036, 
+            "gift_name": "小花花", 
+            "gift_num": 1, 
+            "price": 100, 
+            "paid": "True", 
+            "msg": "", 
+            "fans_medal_level": 0, 
+            "guard_level": 0, 
+            "timestamp": 1640693582, 
+            "anchor_lottery": "None", 
+            "pk_info": "None", 
+            "anchor_info": {
+                "uid": 23920239, 
+                "uname": "小米公司", 
+                "uface": "http://i0.hdslb.com/bfs/face/398e4b6654bbb64d87f645b9b45591e4f959f6ce.jpg"
+            }
+        }
+    }
+ },
+ {
+    "msg_type": "other",
+    "_content": {
+        "cmd": "LIVE_INTERACTIVE_GAME",
+        "data": {
+            "type": 1,
+            "uid": 385956415,
+            "uname": "工号1001", 
+            "uface": "http://i1.hdslb.com/bfs/face/e2ddc2275df94af1cebf7028aa1bdc1bb30e78f4.jpg", 
+            "gift_id": 31036, 
+            "gift_name": "小花花", 
+            "gift_num": 1, 
+            "price": 100, 
+            "paid": "True", 
+            "msg": "", 
+            "fans_medal_level": 0, 
+            "guard_level": 0, 
+            "timestamp": 1640693582, 
+            "anchor_lottery": "None", 
+            "pk_info": "None", 
+            "anchor_info": {
+                "uid": 23920239, 
+                "uname": "小米公司", 
+                "uface": "http://i0.hdslb.com/bfs/face/398e4b6654bbb64d87f645b9b45591e4f959f6ce.jpg"
+            }
+        }
+    }
+ }
+]
+
 print(FlatDict(dic))
-Flat2CSV(dic)
+Flat2CSV(diclist)
