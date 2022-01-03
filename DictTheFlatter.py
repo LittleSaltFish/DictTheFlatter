@@ -22,18 +22,21 @@ def extract(front,dic):
 
 def flat2row(flat):
     # 将flat格式存储的每一个value行拼起来，输出数据行
-    ret=""
+    ret = ""
     for i in flat:
-        ret+=str(i[1])
-        ret+=","
+        value=str(i[1]).replace(",","，")
+        ret += value
+        ret += ","
     return ret
+
 
 def flat2title(flat):
     # 将flat格式存储的每一个key行拼起来，输出标题行
-    ret=""
+    ret = ""
     for i in flat:
-        ret+=str(i[0])
-        ret+=","
+        key=str(i[0]).replace(",","，")
+        ret += key
+        ret += ","
     return ret
 
 def FlatDict(dic):
@@ -67,7 +70,7 @@ def Flat2CSV(DicList):
     i=0
     for key,value in DataDict.items():
         # 每种类型的dict均会有一个文件，自行选择特征，并修改文件名即可
-        with open(f"./data/type_{i}.csv","a+",encoding="utf-8") as f:
+        with open(f"./data/type_{i}.csv","a+",encoding="utf-8-sig") as f:
             
             f.write(f"{key}\n")
             for ValueLine in value:
